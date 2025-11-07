@@ -2,10 +2,13 @@ import React from "react";
 
 import { Chatbot } from "supersimpledev";
 
+import ChatInputClasses from './ChatInput.module.css'
+
 function ChatInput({ chatMessages, setChatMessages } 
   : {chatMessages : MessageType[], setChatMessages: React.Dispatch<React.SetStateAction<MessageType[]>>}
 ) {
   const [inputText, setInputText] = React.useState<string>("");
+
 
   function saveInputText(event: React.ChangeEvent<HTMLInputElement>): void {
     event.preventDefault();
@@ -37,16 +40,36 @@ function ChatInput({ chatMessages, setChatMessages }
     setInputText("");
   }
 
+   const keyDownHandler:React.KeyboardEventHandler<HTMLInputElement> = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+    
+          if(e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
+          }
+       
+   }
+
+  React.useEffect(() => {
+    const inputElem: HTMLElement | null = document.getElementById('send_button');
+
+    inputElem?.addEventListener('keydown', keyDownHandler)
+
+    return () => {
+      inputElem?.removeEventListener('keydown', keyDownHandler);
+    }
+  })
+
   return (
-    <div className="chat-input-container">
+    <div className={ChatInputClasses["chat-input-container"]} id="input_point">
       <input
         placeholder="Send a message to Chatbot"
         size={30}
         onChange={saveInputText}
         value={inputText}
-        className="chat-input"
+        className={ChatInputClasses["chat-input"]}
+        id="send_button"
       />
-      <button onClick={sendMessage} className="send-button">
+      <button onClick={sendMessage} className={ChatInputClasses["send-button"]} >
         Send
       </button>
     </div>

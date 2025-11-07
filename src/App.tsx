@@ -1,46 +1,45 @@
-import { useState } from 'react'
+import { useState} from 'react'
+import { ErrorBoundary } from 'react-error-boundary';
 
+import ChatBox from './components/ChatBox';
 
-import './App.css'
-
-import ChatMessages from './components/ChatMessages'
-import ChatInput from './components/ChatInput'
-
+import AppClasses from './App.module.css'
+import Clock from './components/Clock';
+import Quote from './components/Quote';
 
 
 function App() {
-  const [chatMessages, setChatMessages] = useState<MessageType[]>([{
-          message: 'hello chatbot',
-          sender: 'user',
-          id: 'id1'
-        }, {
-          message: 'Hello! How can I help you?',
-          sender: 'bot',
-          id: 'id2'
-        }, {
-          message: 'can you get me todays date?',
-          sender: 'user',
-          id: 'id3'
-        }, {
-          message: 'Today is September 27',
-          sender: 'bot',
-          id: 'id4'
-        }]);
-        
 
-        return (
-          <div className="app-container">
+  
 
-            <ChatMessages
-              chatMessages={chatMessages}
-            />
+  const [top, setTop] = useState<boolean>(false)
 
-            <ChatInput
-              chatMessages={chatMessages}
-              setChatMessages={setChatMessages}
-            />
+  const switchTop = (): void => {
+    setTop(prev => !prev);
+  };
 
-          </div>
+  return (
+
+    <div className={AppClasses["main-container"]}>
+
+      <Clock />
+             
+      <div className={AppClasses["app-container"]} >
+
+        <div className={AppClasses.header}>
+          <span className={AppClasses.headtxt} onClick={switchTop}> {top ? 'bottom'  : 'top'}</span>
+        </div>
+
+        <ChatBox top={ top } />
+
+      </div>
+
+      <ErrorBoundary fallback={<div>Something went wrong! Please try again.</div>}>
+          <Quote />
+      </ErrorBoundary>
+
+      
+    </div>
         );
 }
 

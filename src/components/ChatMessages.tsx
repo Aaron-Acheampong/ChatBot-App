@@ -1,6 +1,8 @@
 import React from "react";
 import ChatMessage from "./ChatMessage";
 
+import ChatMessagesClasses from './ChatMessages.module.css'
+
 function ChatMessages({ chatMessages }: { chatMessages: MessageType[] }) {
   const chatMessagesRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -12,7 +14,7 @@ function ChatMessages({ chatMessages }: { chatMessages: MessageType[] }) {
   }, [chatMessages]);
 
   return (
-    <div className="chat-messages-container" ref={chatMessagesRef}>
+    <div className={ChatMessagesClasses["chat-messages-container"]} ref={chatMessagesRef}>
       {chatMessages.map((chatMessage) => {
         return (
           <ChatMessage
