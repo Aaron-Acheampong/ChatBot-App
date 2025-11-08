@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from 'react'
+import {useState, useEffect} from 'react'
 import { useErrorBoundary } from 'react-error-boundary';
 
 import ClockClasses from './Quote.module.css';
@@ -40,13 +40,14 @@ function Quote() {
                 console.log('Aborted request');
                 return;
             } */
-           showBoundary(e);
+           if (e instanceof Error)
+                showBoundary(e);
         } 
 
         
     };
 
-    const handleClick = (e: any) => {
+    const handleClick: React.MouseEventHandler<HTMLInputElement> = (e: React.MouseEvent<HTMLInputElement>) => {
         e.preventDefault();
         if(quotes && quotes.length > 0){
                 const randomIndex = Math.floor(Math.random() * quotes.length);

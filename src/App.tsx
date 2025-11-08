@@ -34,7 +34,7 @@ function App() {
 
       </div>
 
-      <ErrorBoundary fallback={<div>Something went wrong! Please try again.</div>}>
+      <ErrorBoundary fallback={<div className={AppClasses.error}>Something went wrong! Please try again.</div>}>
           <Quote />
       </ErrorBoundary>
 

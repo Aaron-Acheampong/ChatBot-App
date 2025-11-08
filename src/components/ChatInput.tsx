@@ -50,7 +50,7 @@ function ChatInput({ chatMessages, setChatMessages }
    }
 
   React.useEffect(() => {
-    const inputElem: HTMLElement | null = document.getElementById('send_button');
+    const inputElem = document.getElementById('send_button') as HTMLInputElement;
 
     inputElem?.addEventListener('keydown', keyDownHandler)
 
